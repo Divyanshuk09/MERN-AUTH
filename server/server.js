@@ -13,9 +13,6 @@ connectDB();
 // ✅ Corrected allowedOrigins array
 const allowedOrigins = [
   'https://mern-auth-git-main-divyanshuk09s-projects.vercel.app',
-  'https://mern-auth-sooty-kappa.vercel.app',
-  'https://mern-auth-8yfebp1fg-divyanshuk09s-projects.vercel.app',
-  'https://mern-auth-git-main-divyanshuk09s-projects.vercel.app',
   'http://localhost:5173'
 ];
 
