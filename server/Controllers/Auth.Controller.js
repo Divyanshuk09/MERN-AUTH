@@ -8,7 +8,6 @@ import { PASSWORD_RESET_TEMPLATE, EMAIL_VERIFY_TEMPLATE } from "../Nodemailer/Em
 export const register = async (req, res) => {
 
     const { name, email, password } = req.body;
-
     // 🔹 Check karo ki user ne saare required fields diye hai ya nahi
     if (!name || !email || !password) {
         return res.json({
@@ -19,7 +18,9 @@ export const register = async (req, res) => {
 
     try {
         // 🔹 Dekho agar user pehle se exist karta hai toh
+        
         const existingUser = await User.findOne({ email });
+        
         if (existingUser) {
             return res.json({
                 success: false,
@@ -61,7 +62,6 @@ export const register = async (req, res) => {
         try {
             await transporter.sendMail(mailOptions);
         } catch (emailErr) {
-            console.log("Email not sent:", emailErr.message);
         }
         user.password = undefined
         // 🔹 Final response bhej do
@@ -166,7 +166,7 @@ export const logout = async (req, res) => {
 export const sendVerifyOtp = async (req, res) => {
 
     try {
-        const userId = req?.body?.userId;
+        const userId = req?.userId;
         const user = await User.findById(userId);
 
         // 🔹 User find karo
@@ -231,7 +231,6 @@ export const sendVerifyOtp = async (req, res) => {
                 message: "Verification OTP sent successfully to user email."
             })
         } catch (emailErr) {
-            console.log("Email not sent:", emailErr.message);
             return res.json({
                 success: false,
                 message: "Failed to send OTP email. Try again later."
@@ -248,7 +247,8 @@ export const sendVerifyOtp = async (req, res) => {
 
 // Verify OTP controller
 export const verifyOtp = async (req, res) => {
-    const { userId, otp } = req.body;
+    const { userId } = req;
+    const {otp} =req.body;
 
     // 🔹 Required fields check karo
     if (!userId || !otp) {
@@ -398,7 +398,6 @@ export const sendResetOtp = async (req, res) => {
                 message: "Reset password OTP sent successfully to user email."
             });
         } catch (emailErr) {
-            console.log("Email not sent:", emailErr.message);
             return res.json({
                 success: false,
                 message: "Failed to send OTP email. Try again later."

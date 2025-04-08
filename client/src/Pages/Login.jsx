@@ -57,7 +57,7 @@ const Login = () => {
         getUserData();
         navigate("/");
       } else {
-        toast.error(error.message, { autoClose: 1500 });
+        toast.error(data.message, { autoClose: 1500 });
       }
     } catch (error) {
       toast.error(error?.response?.data?.message || "Something went wrong.");

@@ -9,7 +9,7 @@ import userRouter from './Routes/User.Router.js';
 dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
-
+connectDB();
 // ✅ Corrected allowedOrigins array
 const allowedOrigins = [
   'https://mern-auth-git-main-divyanshuk09s-projects.vercel.app',

@@ -7,7 +7,6 @@ export const AppContent = createContext();
 export const AppContextProvider = (props) => {
   axios.defaults.withCredentials = true;
 
-  // 🌐 Dynamically choose backend URL
   const backendUrl =
     window.location.hostname === "localhost"
       ? "http://localhost:3000"
@@ -22,7 +21,9 @@ export const AppContextProvider = (props) => {
       if (data.success) {
         setUserData(data.userData);
       } else {
-        toast.error(data.message, { autoClose: 1500 });
+        toast.error(data.message || "Failed to fetch user data", {
+          autoClose: 1500,
+        });
       }
     } catch (error) {
       toast.error(error?.response?.data?.message || "Something went wrong.", {
@@ -39,7 +40,7 @@ export const AppContextProvider = (props) => {
         getUserData();
       }
     } catch (error) {
-      // Optional: Add error toast if needed
+      // Optional: show toast
     }
   };
 
