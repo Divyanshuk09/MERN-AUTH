@@ -23,6 +23,9 @@ app.use(cookieParser());
 
 app.use('/api/auth',authRouter)
 app.use('/api/user',userRouter)
+app.get('/',(req,res)=>{
+  res.send("API IS WORKING");
+})
 
 app.listen(port, () => {
     console.log(`Server is running on: http://localhost:${port}`);
