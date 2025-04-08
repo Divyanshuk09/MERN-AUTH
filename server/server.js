@@ -11,7 +11,7 @@ const app = express()
 const port = process.env.PORT || 3000
 
 connectDB();
-const allowedOrigins = ['https://mern-auth-sooty-kappa.vercel.app/'];
+const allowedOrigins = ['https://mern-auth-sooty-kappa.vercel.app'];
 app.use(cors({
   origin: allowedOrigins,
   credentials: true,
