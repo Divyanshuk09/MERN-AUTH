@@ -33,14 +33,16 @@ export const AppContextProvider = (props) => {
   };
 
   const getAuthState = async () => {
-    try {
-      const { data } = await axios.get(`${backendUrl}/api/auth/isAuthenticated`);
-      if (data.success) {
-        setIsLoggedIn(true);
-        getUserData();
-      }
-    } catch (error) {
-      // Optional: show toast
+  try {
+    const { data } = await axios.get(`${backendUrl}/api/auth/isAuthenticated`);
+    if (data.success) {
+      setIsLoggedIn(true);
+      getUserData();
+      toast.success(data.message);
+    }
+  } catch (error) {
+      toast.error("Login to continue",{autoClose:1500})
+     toast.error(error.message)
     }
   };
 
