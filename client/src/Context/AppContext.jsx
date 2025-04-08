@@ -4,33 +4,42 @@ import { toast } from "react-toastify";
 
 export const AppContent = createContext();
 
-
 export const AppContextProvider = (props) => {
   axios.defaults.withCredentials = true;
 
-  const backendUrl = import.meta.env.VITE_BACKEND_URI;
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userData, setUserData] = useState(false);
+  // 🌐 Dynamically choose backend URL
+  const backendUrl =
+    window.location.hostname === "localhost"
+      ? "http://localhost:3000"
+      : "https://mern-auth-hjeb.onrender.com";
 
-  const getAuthState = async()=>{
-    try {
-      const {data}  = await axios.get(backendUrl + '/api/auth/isAuthenticated')
-      if (data.success) {
-        setIsLoggedIn(true)
-        getUserData()
-      }
-    } catch (error) {
-    }
-  }
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userData, setUserData] = useState(null);
 
   const getUserData = async () => {
     try {
-      const { data } = await axios.get(backendUrl + '/api/user/user-details');
-      data.success
-        ? setUserData(data.userData)
-        : toast.error(data.message, { autoClose: 1500 });
+      const { data } = await axios.get(`${backendUrl}/api/user/user-details`);
+      if (data.success) {
+        setUserData(data.userData);
+      } else {
+        toast.error(data.message, { autoClose: 1500 });
+      }
     } catch (error) {
-      toast.error(error.message, { autoClose: 1500 });
+      toast.error(error?.response?.data?.message || "Something went wrong.", {
+        autoClose: 1500,
+      });
+    }
+  };
+
+  const getAuthState = async () => {
+    try {
+      const { data } = await axios.get(`${backendUrl}/api/auth/isAuthenticated`);
+      if (data.success) {
+        setIsLoggedIn(true);
+        getUserData();
+      }
+    } catch (error) {
+      // Optional: Add error toast if needed
     }
   };
 
@@ -47,7 +56,5 @@ export const AppContextProvider = (props) => {
     getUserData,
   };
 
-  return (
-    <AppContent.Provider value={value}>{props.children}</AppContent.Provider>
-  );
+  return <AppContent.Provider value={value}>{props.children}</AppContent.Provider>;
 };
