@@ -20,6 +20,7 @@ export const AppContextProvider = (props) => {
       const { data } = await axios.get(`${backendUrl}/api/user/user-details`);
       if (data.success) {
         setUserData(data.userData);
+        toast.success(`Welcome back ${data.userData.name}`,{autoClose:1500})
       } else {
         toast.error(data.message || "Failed to fetch user data", {
           autoClose: 1500,
@@ -42,7 +43,7 @@ export const AppContextProvider = (props) => {
     }
   } catch (error) {
       toast.error("Login to continue",{autoClose:1500})
-     toast.error(error.message)
+     toast.error(error.message,{autoClose:1500})
     }
   };
 

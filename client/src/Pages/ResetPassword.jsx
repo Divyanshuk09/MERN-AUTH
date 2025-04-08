@@ -103,15 +103,15 @@ const ResetPassword = () => {
       const {data} = await axios.post(backendUrl+'/api/auth/reset-password',{email,otp,newPassword})
       if (data.success) {
         navigate('/')
-        toast.success(data.message)
+        toast.success(data.message,{autoClose:1500})
       }
       else{
         navigate('/reset-password')
-        toast.error(data.message)
+        toast.error(data.message,{autoClose:1500})
       }
 
    } catch (error) {
-    toast.error(error.message)
+    toast.error(error.message,{autoClose:1500})
    }
   }
 

@@ -60,7 +60,7 @@ const Login = () => {
         toast.error(data.message, { autoClose: 1500 });
       }
     } catch (error) {
-      toast.error(error?.response?.data?.message || "Something went wrong.");
+      toast.error(error?.response?.data?.message || "Something went wrong.",{autoClose:1500});
     }
   };
 

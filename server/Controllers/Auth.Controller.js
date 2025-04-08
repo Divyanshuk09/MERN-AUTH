@@ -106,7 +106,7 @@ export const login = async (req, res) => {
         if (!IsMatch) {
             return res.json({
                 success: false,
-                message: "Password doesn't match"
+                message: "Invalid Password"
             });
         }
 
