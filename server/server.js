@@ -16,6 +16,7 @@ const allowedOrigins = [
   'https://mern-auth-sooty-kappa.vercel.app',
   'https://mern-auth-8yfebp1fg-divyanshuk09s-projects.vercel.app',
   'https://mern-auth-git-main-divyanshuk09s-projects.vercel.app',
+  'http://localhost:5173'
 ];
 
 app.use(cors({
@@ -23,7 +24,7 @@ app.use(cors({
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS'));
+      callback(new Error("Not allowed by CORS"));
     }
   },
   credentials: true,
